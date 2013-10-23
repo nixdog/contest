@@ -1,0 +1,42 @@
+#! /usr/bin/env python
+import sys
+
+OK = 0
+WA = 1
+PE = 2
+FL = 3
+
+def main():
+    if len(sys.argv) < 4:
+        print("Usage: " + sys.argv[0] + "infile.txt outfile.txt answerfile.txt")
+        sys.exit(0)
+    inf = open(sys.argv[1], 'r')
+    ouf = open(sys.argv[2], 'r')
+    ans = open(sys.argv[3], 'r')
+
+    for inline in inf:
+        outline = ouf.readline()
+        ansline = ans.readline()
+        answords = ansline.split()	
+        outwords = outline.split()	
+        if inline == ansline and outline == ansline:
+            continue
+        elif inline == ansline and outwords != answords:
+            sys.exit(PE)
+        else:
+            if not answords and not outwords:
+                continue
+            if answords[0] != outwords[0]:
+                sys.exit(WA)
+            answords.remove(answords[0])
+            outwords.remove(outwords[0])
+            for answ in answords:
+                if outwords.count(answ) == 0:
+                        sys.exit(WA)
+
+    sys.exit(OK)
+
+if __name__ == "__main__":
+	    main()
+
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
